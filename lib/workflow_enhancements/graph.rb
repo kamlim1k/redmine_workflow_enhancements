@@ -23,7 +23,7 @@ module WorkflowEnhancements::Graph
 
     statuses_array = tracker.issue_statuses.map do |s|
       cls = ''
-      if s.is_default
+      if s.has_attribute?(:is_default) ? s.is_default : Tracker.where(:default_status_id => s.id).any?
         cls = 'state-new'
       elsif s.is_closed
         cls = 'state-closed'
